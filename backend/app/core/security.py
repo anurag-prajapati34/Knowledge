@@ -25,10 +25,6 @@ def match_password(password: str, hashed_password: str) -> bool:
 
 def create_access_token(payload: dict) -> str:
 
-    print(payload)
-
-    print("secred-->", settings)
-
     if settings.jwt_secret_key == None:
         raise Exception("Secret key not found")
 
@@ -40,3 +36,14 @@ def create_access_token(payload: dict) -> str:
         algorithm="HS256",
     )
     return token
+
+
+"""Verify JWT Token"""
+
+
+def verify_jwt_token(token: str) -> dict:
+    if settings.jwt_secret_key == None:
+        raise Exception("Secret key not found")
+
+    payload = jwt.decode(token, settings.jwt_secret_key, algorithms=["HS256"])
+    return payload

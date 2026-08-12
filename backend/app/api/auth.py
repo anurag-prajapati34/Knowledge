@@ -14,7 +14,7 @@ async def register(data: UserRegister, db: AsyncSession = Depends(get_db)):
     return {"message": "success", "data": result}
 
 
-security = security = HTTPBasic()
+security = HTTPBasic()
 
 
 @router.post("/login")
