@@ -1,13 +1,17 @@
-
-from sqlalchemy.orm import Mapped,mapped_column
-from sqlalchemy import String
 from app.db.base import Base
 from app.db.mixins import CommonMixins
+from sqlalchemy import String, Text
+from sqlalchemy.orm import Mapped, mapped_column
+
 
 class User(Base, CommonMixins):
-    __tablename__="users"
+    __tablename__ = "users"
 
-    id: Mapped[int]=mapped_column(primary_key=True,autoincrement=True)
-    full_name:Mapped[str]=mapped_column(String(100),nullable=False)
-    email:Mapped[str]=mapped_column(String(100),unique=True,index=True,nullable=False)
-    password:Mapped[str]=mapped_column(String(255),nullable=False)#this would be hashed password
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    full_name: Mapped[str] = mapped_column(String(100), nullable=False)
+    email: Mapped[str] = mapped_column(
+        String(100), unique=True, index=True, nullable=False
+    )
+    password: Mapped[str] = mapped_column(
+        Text, nullable=False
+    )  # this would be hashed password

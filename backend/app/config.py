@@ -8,9 +8,9 @@ class Settings(BaseSettings):
     # celery_broker_url: str
     # celery_result_backend: str
 
-    # jwt_secret_key: str
-    # jwt_algorithm: str = "HS256"
-    # access_token_expire_minutes: int = 60
+    jwt_secret_key: str
+    jwt_algorithm: str = "HS256"
+    access_token_expire_minutes: int = 60
 
     # gemini_api_key: str
     # embedding_model: str = "all-MiniLM-L6-v2"
@@ -18,4 +18,4 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
 
-settings = Settings() # type: ignore[call-arg]
+settings = Settings()  # type: ignore[call-arg]
