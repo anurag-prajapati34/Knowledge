@@ -3,6 +3,7 @@ from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db.base import Base
 from app.db.mixins import CommonMixins
+from app.utils.enums import DocStatus
 
 
 class Documents(Base, CommonMixins):
@@ -15,4 +16,14 @@ class Documents(Base, CommonMixins):
         index=True,
     )
     file_name: Mapped[str] = mapped_column(String(100), nullable=False)
+    file_path: Mapped[str] = mapped_column(String(255), nullable=False)
+    file_type: Mapped[str] = mapped_column(String(10), nullable=False)
     description: Mapped[str] = mapped_column(Text)
+    doc_status: Mapped[str] = mapped_column(
+        String(100), nullable=False, default=DocStatus.PENDING
+    )
+    user_id: Mapped[int] = mapped_column(
+        Integer,
+        ForeignKey("users.id", ondelete="CASCADE", onupdate="CASCADE"),
+        nullable=False,
+    )

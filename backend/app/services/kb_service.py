@@ -5,6 +5,8 @@ from app.models.documents import Documents
 from app.models.knowledge_bases import KnowledgeBase
 from app.schemas.auth import JWTPayload
 from app.schemas.kb import CreateKB
+from app.utils.enums import DocStatus
+from app.workers.tasks.process_document import process_document_task
 from fastapi import HTTPException, UploadFile, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -76,6 +78,10 @@ async def upload_kb_documents_service(
     new_doc = Documents(
         kb_id=kb.id,
         file_name=stored_filename,
+        file_path=stored_file_path,
+        file_type=ext,
+        user_id=user.id,
+        doc_status=DocStatus.PENDING,
         description="",
     )
 
@@ -83,6 +89,7 @@ async def upload_kb_documents_service(
     await db.commit()
     await db.refresh(new_doc)
 
+    process_document_task.delay(new_doc.id)
     return new_doc
 
 

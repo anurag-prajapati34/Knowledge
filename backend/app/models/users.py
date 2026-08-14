@@ -1,7 +1,8 @@
-from app.db.base import Base
-from app.db.mixins import CommonMixins
 from sqlalchemy import String, Text
 from sqlalchemy.orm import Mapped, mapped_column
+
+from app.db.base import Base
+from app.db.mixins import CommonMixins
 
 
 class User(Base, CommonMixins):
