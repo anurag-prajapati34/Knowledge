@@ -17,7 +17,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 
 async def create_kb_service(db: AsyncSession, data: CreateKB, user: JWTPayload):
-    new_kb = KnowledgeBase(name=data.name, user_id=user.id)
+    new_kb = KnowledgeBase(
+        name=data.name, description=data.description, user_id=user.id
+    )
     db.add(new_kb)
     await db.commit()
     await db.refresh(new_kb)
@@ -154,3 +156,91 @@ async def query_kb_service(
 
     # result = await db.execute(select(Documents).where(Documents.kb_id == kb_id))
     return answer
+
+
+async def delete_kb_service(db: AsyncSession, kb_id: int, user: JWTPayload):
+    # verify kb ownership
+    kb = await verfiy_kb_ownership(db=db, kb_id=kb_id, user=user)
+
+    if kb == None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid request"
+        )
+
+    await db.delete(kb)
+    await db.commit()
+
+    return kb
+
+
+async def delete_kb_document_service(
+    db: AsyncSession, kb_id: int, document_id: int, user: JWTPayload
+):
+    # verify kb ownership
+    doc = await db.execute(
+        select(Documents).where(
+            Documents.id == document_id
+            and Documents.kb_id == kb_id
+            and Documents.user_id == user.id
+        )
+    )
+    doc = doc.scalar_one_or_none()
+
+    if doc == None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid request"
+        )
+
+    await db.delete(doc)
+    await db.commit()
+
+    return doc
+
+
+async def get_kb_service(db: AsyncSession, kb_id: int, user: JWTPayload):
+    result = await verfiy_kb_ownership(db=db, kb_id=kb_id, user=user)
+
+    if result == None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Knowledge base not found"
+        )
+    return result
+
+
+async def update_kb_service(
+    db: AsyncSession, kb_id: int, data: CreateKB, user: JWTPayload
+):
+    result = await verfiy_kb_ownership(db=db, kb_id=kb_id, user=user)
+
+    if result == None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Knowledge base not found"
+        )
+
+    result.name = data.name
+    if data.description != None:
+        result.description = data.description
+
+    await db.commit()
+
+    return result
+
+
+async def get_document_service(
+    db: AsyncSession, kb_id: int, document_id: int, user: JWTPayload
+):
+    result = await db.execute(
+        select(Documents).where(
+            Documents.id == document_id
+            and Documents.kb_id == kb_id
+            and Documents.user_id == user.id
+        )
+    )
+
+    doc = result.scalar_one_or_none()
+    if doc == None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Document not found"
+        )
+
+    return doc

@@ -1,6 +1,6 @@
 from app.core.security import create_access_token, hash_password, match_password
 from app.models.users import User
-from app.schemas.auth import UserLogin, UserRegister
+from app.schemas.auth import JWTPayload, UserLogin, UserRegister
 from fastapi import HTTPException, status
 from fastapi.security import HTTPBasic
 from sqlalchemy import select
@@ -73,3 +73,12 @@ async def login_service(db: AsyncSession, data: UserLogin):
         "token_type": "bearer",
         "full_name": existing_user.full_name,
     }
+
+
+async def get_me_service(db: AsyncSession, user: JWTPayload):
+    result = await get_user_by_email(db=db, email=user.email)
+    if result == None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
+        )
+    return {"email": result.email, "full_name": result.full_name}

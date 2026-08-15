@@ -1,6 +1,7 @@
 from app.db.session import get_db
-from app.schemas.auth import UserLogin, UserRegister
-from app.services.auth_service import login_service, register_service
+from app.dependencies.auth import authenticate
+from app.schemas.auth import JWTPayload, UserLogin, UserRegister
+from app.services.auth_service import get_me_service, login_service, register_service
 from fastapi import APIRouter, Depends
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -27,3 +28,11 @@ async def login(
     print(data)
     result = await login_service(db=db, data=data)
     return {"message": "success", "data": result}
+
+
+@router.get("/me")
+async def me(
+    user: JWTPayload = Depends(authenticate), db: AsyncSession = Depends(get_db)
+):
+    me = await get_me_service(db=db, user=user)
+    return {"message": "success", "data": me}

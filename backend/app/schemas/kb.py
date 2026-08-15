@@ -3,6 +3,7 @@ from pydantic import BaseModel
 
 class CreateKB(BaseModel):
     name: str
+    description: str = ""  # make it optional
 
 
 class QueryKB(BaseModel):
