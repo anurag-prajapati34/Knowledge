@@ -64,9 +64,11 @@ export const KnowledgeBaseDetailPage: React.FC = () => {
     fetchDocs();
   }, [fetchKBDetails, fetchDocs]);
 
-  // Document Status Polling setup: Poll every 4 seconds if any doc is in 'processing' status
+  // Document Status Polling setup: Poll every 4 seconds if any doc is in 'PROCESSING' or 'PENDING' status
   useEffect(() => {
-    const hasProcessingDocs = documents.some((doc) => doc.status === 'processing');
+    const hasProcessingDocs = documents.some(
+      (doc) => doc.doc_status === 'PROCESSING' || doc.doc_status === 'PENDING'
+    );
 
     if (hasProcessingDocs) {
       setIsPolling(true);
@@ -94,7 +96,7 @@ export const KnowledgeBaseDetailPage: React.FC = () => {
       setDocuments((prev) => prev.filter((d) => String(d.id) !== String(docId)));
       toast.success('Document deleted.');
     } catch (err: any) {
-      toast.error('Failed to delete document.');
+      toast.error(err?.message || 'Deleting a document is not supported by the backend.');
     }
   };
 
@@ -179,7 +181,7 @@ export const KnowledgeBaseDetailPage: React.FC = () => {
                 </Badge>
               </div>
               <p className="text-xs text-slate-400">
-                {kb?.description || 'No description provided for this knowledge base.'}
+                Vectorized Knowledge Base for fast document retrieval and RAG query processing.
               </p>
             </div>
 

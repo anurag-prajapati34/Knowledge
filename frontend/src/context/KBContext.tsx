@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import type { KnowledgeBase } from '../types';
 import { kbApi } from '../api/kb';
 import type { CreateKBPayload } from '../api/kb';
+import { formatApiError } from '../api/client';
 import { toast } from 'react-toastify';
 
 export interface KBContextType {
@@ -33,7 +34,7 @@ export const KBProvider: React.FC<KBProviderProps> = ({ children }) => {
       setKbs(data);
       return data;
     } catch (err: any) {
-      toast.error('Failed to load Knowledge Bases.');
+      toast.error(formatApiError(err));
       return [];
     } finally {
       setIsLoading(false);
@@ -47,7 +48,7 @@ export const KBProvider: React.FC<KBProviderProps> = ({ children }) => {
       toast.success(`Knowledge Base "${newKb.name}" created!`);
       return newKb;
     } catch (err: any) {
-      const msg = err?.response?.data?.detail || 'Failed to create Knowledge Base.';
+      const msg = formatApiError(err);
       toast.error(msg);
       throw err;
     }
@@ -62,7 +63,7 @@ export const KBProvider: React.FC<KBProviderProps> = ({ children }) => {
       }
       toast.success('Knowledge Base deleted successfully.');
     } catch (err: any) {
-      toast.error('Failed to delete Knowledge Base.');
+      toast.error(formatApiError(err) || 'Deleting Knowledge Base is not supported.');
       throw err;
     }
   };
@@ -83,3 +84,4 @@ export const KBProvider: React.FC<KBProviderProps> = ({ children }) => {
     </KBContext.Provider>
   );
 };
+

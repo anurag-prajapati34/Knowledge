@@ -35,7 +35,6 @@ export const CreateKBModal: React.FC<CreateKBModalProps> = ({
     try {
       const newKb = await createKB({
         name: name.trim(),
-        description: description.trim() || undefined,
       });
       setName('');
       setDescription('');

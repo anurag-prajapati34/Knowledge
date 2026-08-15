@@ -18,10 +18,8 @@ export const DashboardPage: React.FC = () => {
     fetchKBs();
   }, [fetchKBs]);
 
-  const filteredKBs = kbs.filter(
-    (kb) =>
-      kb.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (kb.description && kb.description.toLowerCase().includes(searchQuery.toLowerCase()))
+  const filteredKBs = kbs.filter((kb) =>
+    kb.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (

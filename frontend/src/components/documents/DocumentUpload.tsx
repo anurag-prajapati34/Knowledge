@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { UploadCloud, AlertCircle } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { documentsApi } from '../../api/documents';
+import { formatApiError } from '../../api/client';
 import type { Document } from '../../types';
 import { toast } from 'react-toastify';
 
@@ -16,13 +17,13 @@ export const DocumentUpload: React.FC<DocumentUploadProps> = ({ kbId, onUploadSu
   const [dragError, setDragError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const allowedExtensions = ['.pdf', '.md', '.txt'];
+  const allowedExtensions = ['.pdf', '.docx', '.txt', '.md'];
 
   const validateFile = (file: File): boolean => {
     const ext = '.' + file.name.split('.').pop()?.toLowerCase();
     if (!allowedExtensions.includes(ext)) {
       setDragError(`Unsupported file format. Please upload ${allowedExtensions.join(', ')}`);
-      toast.error(`Invalid file type: ${file.name}. Only PDF, MD, and TXT files are supported.`);
+      toast.error(`Invalid file type: ${file.name}. Only PDF, DOCX, TXT, and MD files are supported.`);
       return false;
     }
     if (file.size > 25 * 1024 * 1024) {
@@ -43,7 +44,7 @@ export const DocumentUpload: React.FC<DocumentUploadProps> = ({ kbId, onUploadSu
       toast.success(`Successfully uploaded "${file.name}"! Processing document...`);
       onUploadSuccess(newDoc);
     } catch (err: any) {
-      const msg = err?.response?.data?.detail || err?.message || 'Failed to upload document.';
+      const msg = formatApiError(err);
       toast.error(msg);
     } finally {
       setIsUploading(false);

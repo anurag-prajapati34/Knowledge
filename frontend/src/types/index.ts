@@ -2,25 +2,31 @@ export interface User {
   id: number;
   full_name: string;
   email: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface KnowledgeBase {
   id: number;
   name: string;
-  description: string | null;
+  user_id: number;
   created_at: string;
-  document_count?: number;
+  updated_at: string;
 }
 
-export type DocumentStatus = "uploaded" | "processing" | "completed" | "failed";
+export type DocumentStatus = "PENDING" | "PROCESSING" | "PROCESSED" | "FAILED";
 
 export interface Document {
   id: number;
-  filename: string;
+  kb_id: number;
+  file_name: string;
+  file_path: string;
   file_type: string;
-  status: DocumentStatus;
-  error_message: string | null;
+  description?: string;
+  doc_status: DocumentStatus;
+  user_id: number;
   created_at: string;
+  updated_at: string;
 }
 
 export interface SourceCitation {
@@ -40,10 +46,11 @@ export interface ChatMessage {
 export interface AuthResponse {
   access_token: string;
   token_type: string;
-  user?: User;
+  full_name: string;
 }
 
 export interface QueryResponse {
   answer: string;
   sources: SourceCitation[];
 }
+

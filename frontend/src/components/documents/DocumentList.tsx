@@ -22,7 +22,7 @@ export const DocumentList: React.FC<DocumentListProps> = ({
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredDocuments = documents.filter((doc) =>
-    doc.filename.toLowerCase().includes(searchQuery.toLowerCase())
+    (doc.file_name || '').toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (

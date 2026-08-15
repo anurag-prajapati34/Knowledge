@@ -4,6 +4,7 @@ import { MessageBubble } from './MessageBubble';
 import { ChatInput } from './ChatInput';
 import { Bot, Sparkles, Trash2, MessageSquare, BookOpen } from 'lucide-react';
 import { queryApi } from '../../api/query';
+import { formatApiError } from '../../api/client';
 import { toast } from 'react-toastify';
 
 interface ChatWindowProps {
@@ -47,7 +48,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({ kbId, kbName, hasDocumen
       };
       setMessages((prev) => [...prev, assistantMsg]);
     } catch (err: any) {
-      const msg = err?.response?.data?.detail || err?.message || 'Failed to generate answer. Please try again.';
+      const msg = formatApiError(err);
       toast.error(msg);
 
       const errorMsg: ChatMessage = {

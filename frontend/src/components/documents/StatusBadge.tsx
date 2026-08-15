@@ -10,29 +10,33 @@ interface StatusBadgeProps {
 }
 
 export const StatusBadge: React.FC<StatusBadgeProps> = ({ status, errorMessage }) => {
-  switch (status) {
-    case 'completed':
+  const normalizedStatus = (status || '').toUpperCase();
+
+  switch (normalizedStatus) {
+    case 'PROCESSED':
+    case 'COMPLETED':
       return (
         <Badge variant="success">
           <CheckCircle2 className="w-3 h-3 text-emerald-400" />
-          <span>Completed</span>
+          <span>Processed</span>
         </Badge>
       );
-    case 'processing':
+    case 'PROCESSING':
       return (
         <Badge variant="warning" className="animate-pulse">
           <Spinner size="sm" className="text-amber-400" />
           <span>Processing</span>
         </Badge>
       );
-    case 'uploaded':
+    case 'PENDING':
+    case 'UPLOADED':
       return (
         <Badge variant="info">
           <Clock className="w-3 h-3 text-indigo-400" />
-          <span>Uploaded</span>
+          <span>Pending</span>
         </Badge>
       );
-    case 'failed':
+    case 'FAILED':
       return (
         <Badge variant="danger" title={errorMessage || 'Processing failed'}>
           <AlertCircle className="w-3 h-3 text-rose-400" />

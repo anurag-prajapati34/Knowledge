@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Database, FileText, Calendar, Trash2, ArrowUpRight } from 'lucide-react';
+import { Database, Calendar, Trash2, ArrowUpRight } from 'lucide-react';
 import type { KnowledgeBase } from '../../types';
 import { Card } from '../ui/Card';
 import { Spinner } from '../ui/Spinner';
@@ -59,20 +59,20 @@ export const KBCard: React.FC<KBCardProps> = ({ kb, onDelete }) => {
           </div>
         </div>
 
-        {/* Title & Description */}
+        {/* Title */}
         <h3 className="text-base font-semibold text-slate-100 group-hover:text-indigo-300 transition-colors line-clamp-1">
           {kb.name}
         </h3>
         <p className="text-xs text-slate-400 mt-1.5 line-clamp-2 min-h-[36px]">
-          {kb.description || 'No description provided.'}
+          Knowledge Base workspace for document search and context retrieval.
         </p>
       </div>
 
       {/* Footer Info */}
       <div className="mt-6 pt-4 border-t border-slate-800/60 flex items-center justify-between text-xs text-slate-400">
         <div className="flex items-center space-x-1.5">
-          <FileText className="w-3.5 h-3.5" />
-          <span>{kb.document_count ?? 0} docs</span>
+          <Database className="w-3.5 h-3.5 text-indigo-400" />
+          <span>Knowledge Base</span>
         </div>
         <div className="flex items-center space-x-1.5">
           <Calendar className="w-3.5 h-3.5" />

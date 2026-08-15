@@ -9,6 +9,28 @@ export const apiClient = axios.create({
   },
 });
 
+export const formatApiError = (error: any): string => {
+  if (!error) return 'An unexpected error occurred.';
+  if (typeof error === 'string') return error;
+
+  const detail = error.response?.data?.detail;
+  if (typeof detail === 'string') {
+    return detail;
+  }
+
+  if (Array.isArray(detail)) {
+    return detail
+      .map((item) => {
+        if (typeof item === 'string') return item;
+        const field = Array.isArray(item.loc) ? item.loc[item.loc.length - 1] : '';
+        return field ? `${field}: ${item.msg}` : item.msg || JSON.stringify(item);
+      })
+      .join(', ');
+  }
+
+  return error.response?.data?.message || error.message || 'An error occurred. Please try again.';
+};
+
 // Request interceptor: Attach JWT token if available
 apiClient.interceptors.request.use(
   (config) => {
@@ -39,3 +61,4 @@ apiClient.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+

@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import type { User, AuthResponse } from '../types';
 import { authApi } from '../api/auth';
 import type { LoginPayload, RegisterPayload } from '../api/auth';
+import { formatApiError } from '../api/client';
 import { toast } from 'react-toastify';
 
 export interface AuthContextType {
@@ -28,7 +29,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   // Rehydrate auth state from localStorage on app start
   useEffect(() => {
-    const initializeAuth = async () => {
+    const initializeAuth = () => {
       const storedToken = localStorage.getItem('kb_auth_token');
       const storedUser = localStorage.getItem('kb_user');
 
@@ -41,14 +42,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             localStorage.removeItem('kb_user');
           }
         }
-
-        try {
-          const freshUser = await authApi.me();
-          setUser(freshUser);
-          localStorage.setItem('kb_user', JSON.stringify(freshUser));
-        } catch {
-          // Handled silently
-        }
       }
       setIsLoading(false);
     };
@@ -56,15 +49,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     initializeAuth();
   }, []);
 
-  const handleAuthSuccess = (data: AuthResponse, email: string, nameFallback?: string) => {
+  const handleAuthSuccess = (data: AuthResponse, email: string, userResponse?: User) => {
     const token = data.access_token;
     setToken(token);
     localStorage.setItem('kb_auth_token', token);
 
-    const userObj: User = data.user || {
-      id: 1,
+    const userObj: User = userResponse || {
+      id: 0,
       email: email,
-      full_name: nameFallback || email.split('@')[0],
+      full_name: data.full_name || email.split('@')[0],
     };
 
     setUser(userObj);
@@ -77,7 +70,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       handleAuthSuccess(response, payload.email);
       toast.success('Successfully logged in! Welcome back.');
     } catch (err: any) {
-      const msg = err?.response?.data?.detail || err?.message || 'Login failed. Please check your credentials.';
+      const msg = formatApiError(err);
       toast.error(msg);
       throw err;
     }
@@ -85,11 +78,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const register = async (payload: RegisterPayload) => {
     try {
-      const response = await authApi.register(payload);
-      handleAuthSuccess(response, payload.email, payload.full_name);
+      const userResponse = await authApi.register(payload);
+      // Auto login after registration to obtain access token
+      const loginResponse = await authApi.login({
+        email: payload.email,
+        password: payload.password,
+      });
+      handleAuthSuccess(loginResponse, payload.email, userResponse);
       toast.success('Account created successfully!');
     } catch (err: any) {
-      const msg = err?.response?.data?.detail || err?.message || 'Registration failed. Please try again.';
+      const msg = formatApiError(err);
       toast.error(msg);
       throw err;
     }
@@ -119,3 +117,4 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     </AuthContext.Provider>
   );
 };
+

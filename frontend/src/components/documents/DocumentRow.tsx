@@ -12,11 +12,15 @@ interface DocumentRowProps {
 export const DocumentRow: React.FC<DocumentRowProps> = ({ document: doc, onDelete }) => {
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const formattedDate = new Date(doc.created_at).toLocaleDateString('en-US', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-  });
+  const filename = doc.file_name || '';
+
+  const formattedDate = doc.created_at
+    ? new Date(doc.created_at).toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+      })
+    : '';
 
   const getFileIcon = (filename: string) => {
     const ext = filename.split('.').pop()?.toLowerCase();
@@ -30,7 +34,7 @@ export const DocumentRow: React.FC<DocumentRowProps> = ({ document: doc, onDelet
   };
 
   const handleDelete = async () => {
-    if (window.confirm(`Are you sure you want to delete "${doc.filename}"?`)) {
+    if (window.confirm(`Are you sure you want to delete "${filename}"?`)) {
       setIsDeleting(true);
       try {
         await onDelete(doc.id);
@@ -45,15 +49,15 @@ export const DocumentRow: React.FC<DocumentRowProps> = ({ document: doc, onDelet
       {/* File Info */}
       <div className="flex items-center space-x-3 min-w-0 flex-1 pr-4">
         <div className="w-9 h-9 rounded-xl bg-slate-800/80 border border-slate-700/60 flex items-center justify-center shrink-0">
-          {getFileIcon(doc.filename)}
+          {getFileIcon(filename)}
         </div>
         <div className="min-w-0 flex-1">
           <p className="text-sm font-medium text-slate-200 truncate group-hover:text-indigo-300 transition-colors">
-            {doc.filename}
+            {filename}
           </p>
           <div className="flex items-center space-x-3 text-xs text-slate-400 mt-0.5">
             <span className="uppercase tracking-wider font-mono text-[10px] bg-slate-800 px-1.5 py-0.5 rounded">
-              {doc.filename.split('.').pop() || 'file'}
+              {filename.split('.').pop() || doc.file_type || 'file'}
             </span>
             <span className="flex items-center space-x-1">
               <Calendar className="w-3 h-3" />
@@ -65,7 +69,7 @@ export const DocumentRow: React.FC<DocumentRowProps> = ({ document: doc, onDelet
 
       {/* Status Badge */}
       <div className="px-4 shrink-0">
-        <StatusBadge status={doc.status} errorMessage={doc.error_message} />
+        <StatusBadge status={doc.doc_status} errorMessage={doc.description} />
       </div>
 
       {/* Actions */}
