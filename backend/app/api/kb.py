@@ -1,11 +1,12 @@
 from app.db.session import get_db
 from app.dependencies.auth import authenticate
 from app.schemas.auth import JWTPayload
-from app.schemas.kb import CreateKB
+from app.schemas.kb import CreateKB, QueryKB
 from app.services.kb_service import (
     create_kb_service,
     get_kb_documents_service,
     get_kbs_service,
+    query_kb_service,
     upload_kb_documents_service,
 )
 from fastapi import APIRouter, Depends, UploadFile
@@ -57,4 +58,15 @@ async def get_kb_documents(
     db: AsyncSession = Depends(get_db),
 ):
     result = await get_kb_documents_service(db=db, kb_id=kb_id)
+    return {"message": "success", "data": result}
+
+
+@router.post("/{kb_id}/query")
+async def query_kb(
+    kb_id: int,
+    data: QueryKB,
+    user: JWTPayload = Depends(authenticate),
+    db: AsyncSession = Depends(get_db),
+):
+    result = await query_kb_service(db=db, kb_id=kb_id, data=data, user=user)
     return {"message": "success", "data": result}

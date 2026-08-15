@@ -1,10 +1,14 @@
 import os
 import uuid
 
+from app.config import settings
+from app.models.chunks import Chunk
 from app.models.documents import Documents
 from app.models.knowledge_bases import KnowledgeBase
 from app.schemas.auth import JWTPayload
-from app.schemas.kb import CreateKB
+from app.schemas.kb import CreateKB, QueryKB, SourceCitation
+from app.services.embeding_service import embed_texts
+from app.services.llm_service import generate_answer
 from app.utils.enums import DocStatus
 from app.workers.tasks.process_document import process_document_task
 from fastapi import HTTPException, UploadFile, status
@@ -96,3 +100,57 @@ async def upload_kb_documents_service(
 async def get_kb_documents_service(db: AsyncSession, kb_id: int):
     result = await db.execute(select(Documents).where(Documents.kb_id == kb_id))
     return result.scalars().all()
+
+
+async def query_kb_service(
+    db: AsyncSession, kb_id: int, data: QueryKB, user: JWTPayload
+):
+    # verify kb ownership
+    kb = await verfiy_kb_ownership(db=db, kb_id=kb_id, user=user)
+
+    if kb == None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid request"
+        )
+
+    question = data.prompt
+
+    query_embedding = embed_texts([question])[0]
+
+    stmt = (
+        select(Chunk, Documents.file_name)
+        .join(Documents, Chunk.document_id == Documents.id)
+        .where(Chunk.kb_id == kb_id)
+        .order_by(Chunk.embedding.cosine_distance(query_embedding))
+        .limit(5)
+    )
+    result = await db.execute(stmt)
+    rows = result.all()
+
+    if not rows:
+        return {
+            "answer": "No documents have been processed in this knowledge base yet.",
+            "sources": [],
+        }
+
+    print("api key ---", settings.gemini_api_key)
+    context_parts = []
+    sources = []
+    for chunk, filename in rows:
+        context_parts.append(
+            f"[Source: {filename}, chunk {chunk.chunk_index}]\n{chunk.content}"
+        )
+        sources.append(
+            SourceCitation(
+                document_id=chunk.document_id,
+                filename=filename,
+                chunk_index=chunk.chunk_index,
+            )
+        )
+
+    context = "\n\n---\n\n".join(context_parts)
+    answer = ""
+    answer = generate_answer(question=question, context=context)
+
+    # result = await db.execute(select(Documents).where(Documents.kb_id == kb_id))
+    return answer

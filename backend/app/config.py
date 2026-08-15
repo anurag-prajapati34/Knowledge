@@ -12,7 +12,7 @@ class Settings(BaseSettings):
     jwt_algorithm: str = "HS256"
     access_token_expire_minutes: int = 60
 
-    # gemini_api_key: str
+    gemini_api_key: str
     embedding_model: str = "all-MiniLM-L6-v2"
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
