@@ -25,7 +25,6 @@ async def login(
 ):
     data = UserLogin(email=credentials.username, password=credentials.password)
 
-    print(data)
     result = await login_service(db=db, data=data)
     return {"message": "success", "data": result}
 

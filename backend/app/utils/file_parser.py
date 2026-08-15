@@ -2,7 +2,6 @@ from pypdf import PdfReader
 
 
 def extract_text(file_path: str, file_type: str):
-    print("Extracting text from file-----------------------")
 
     if file_type in ("pdf", ".pdf"):
         reader = PdfReader(file_path)

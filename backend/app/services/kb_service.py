@@ -1,7 +1,6 @@
 import os
 import uuid
 
-from app.config import settings
 from app.models.chunks import Chunk
 from app.models.documents import Documents
 from app.models.knowledge_bases import KnowledgeBase
@@ -135,7 +134,6 @@ async def query_kb_service(
             "sources": [],
         }
 
-    print("api key ---", settings.gemini_api_key)
     context_parts = []
     sources = []
     for chunk, filename in rows:

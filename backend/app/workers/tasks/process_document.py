@@ -21,7 +21,6 @@ def process_document_task(document_id: int):
 
 
 async def process_document(document_id: int):
-    print(f"Processing document: {document_id}")
 
     engine = create_async_engine(
         settings.database_url,
@@ -41,7 +40,6 @@ async def process_document(document_id: int):
             doc = result.scalar_one_or_none()
 
             if doc is None:
-                print(f"Document {document_id} not found")
                 return
 
             try:
@@ -53,16 +51,11 @@ async def process_document(document_id: int):
                     doc.file_type,
                 )
 
-                print(f"Raw Extracted text: {raw_text[:500]}")
-
                 if not raw_text:
                     raise ValueError("No extractable text found in document")
 
                 text_chunks = chunk_text(raw_text, chunk_size=500, overlap=50)
                 embeddings = embed_texts(text_chunks)
-
-                print(f"Text Chunks: {text_chunks[:5]}")
-                print(f"Embeddings: {embeddings[:5]}")
 
                 for idx, (content, embedding) in enumerate(
                     zip(text_chunks, embeddings)
@@ -81,8 +74,6 @@ async def process_document(document_id: int):
                 await db.commit()
 
             except Exception:
-                print("Failed to process document")
-                print("Error---", Exception)
                 await db.rollback()
 
                 doc.doc_status = DocStatus.FAILED
