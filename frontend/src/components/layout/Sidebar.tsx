@@ -19,23 +19,23 @@ export const Sidebar: React.FC = () => {
   ];
 
   return (
-    <aside className="w-64 bg-slate-950 border-r border-slate-800/80 flex flex-col justify-between h-screen sticky top-0 shrink-0 select-none">
+    <aside className="w-64 bg-white border-r border-zinc-200 flex flex-col justify-between h-screen sticky top-0 shrink-0 select-none text-black">
       <div>
         {/* Top Header Logo */}
-        <div className="h-16 px-6 flex items-center border-b border-slate-800/80">
+        <div className="h-16 px-6 flex items-center border-b border-zinc-200">
           <Link to="/dashboard" className="flex items-center space-x-2.5">
-            <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center shadow-md shadow-indigo-600/30">
-              <Brain className="w-4 h-4 text-white" />
+            <div className="w-8 h-8 rounded-lg bg-black text-white flex items-center justify-center shadow-md">
+              <Brain className="w-4 h-4" />
             </div>
-            <span className="font-bold text-slate-100 tracking-tight">
-              Knowledge<span className="text-indigo-400">Base</span>
+            <span className="font-bold text-black tracking-tight text-base font-serif-heading">
+              Knowledge<span className="text-zinc-500">Base</span>
             </span>
           </Link>
         </div>
 
         {/* Navigation Items */}
         <div className="p-4 space-y-1">
-          <p className="px-3 text-[11px] font-semibold tracking-wider text-slate-500 uppercase mb-2">
+          <p className="px-3 text-[11px] font-semibold tracking-wider text-zinc-400 uppercase mb-2">
             Main Menu
           </p>
           {navItems.map((item) => {
@@ -44,7 +44,7 @@ export const Sidebar: React.FC = () => {
               return (
                 <div
                   key={item.name}
-                  className="flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-600 cursor-not-allowed opacity-60"
+                  className="flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium text-zinc-400 cursor-not-allowed opacity-60"
                 >
                   <Icon className="w-4 h-4" />
                   <span>{item.name}</span>
@@ -60,8 +60,8 @@ export const Sidebar: React.FC = () => {
                 className={({ isActive }) =>
                   `flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${
                     isActive
-                      ? 'bg-indigo-600/10 text-indigo-400 border border-indigo-500/20 shadow-sm'
-                      : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/60'
+                      ? 'bg-black text-white font-semibold shadow-sm'
+                      : 'text-zinc-600 hover:text-black hover:bg-zinc-100'
                   }`
                 }
               >
@@ -74,21 +74,21 @@ export const Sidebar: React.FC = () => {
       </div>
 
       {/* User Info & Logout Footer */}
-      <div className="p-4 border-t border-slate-800/80 bg-slate-950/60">
+      <div className="p-4 border-t border-zinc-200 bg-zinc-50">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3 min-w-0">
-            <div className="w-9 h-9 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-300 shrink-0 font-medium text-sm">
+            <div className="w-9 h-9 rounded-full bg-black text-white border border-zinc-200 flex items-center justify-center shrink-0 font-medium text-sm">
               {user?.full_name ? user.full_name.charAt(0).toUpperCase() : <UserIcon className="w-4 h-4" />}
             </div>
             <div className="min-w-0">
-              <p className="text-sm font-medium text-slate-200 truncate">{user?.full_name || 'User'}</p>
-              <p className="text-xs text-slate-500 truncate">{user?.email || 'user@example.com'}</p>
+              <p className="text-sm font-medium text-black truncate">{user?.full_name || 'User'}</p>
+              <p className="text-xs text-zinc-500 truncate">{user?.email || 'user@example.com'}</p>
             </div>
           </div>
           <button
             onClick={handleLogout}
             title="Log Out"
-            className="text-slate-400 hover:text-rose-400 p-2 rounded-lg hover:bg-slate-900 transition-colors shrink-0"
+            className="text-zinc-500 hover:text-black p-2 rounded-lg hover:bg-zinc-200 transition-colors shrink-0"
           >
             <LogOut className="w-4 h-4" />
           </button>

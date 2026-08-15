@@ -113,28 +113,28 @@ export const KnowledgeBaseDetailPage: React.FC = () => {
     : '';
 
   return (
-    <div className="min-h-screen flex bg-[#090d16] text-slate-100">
+    <div className="min-h-screen flex bg-white text-black font-sans">
       <Sidebar />
 
       <main className="flex-1 flex flex-col min-w-0 overflow-y-auto">
         {/* Header Navigation Bar */}
-        <header className="h-16 px-8 border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-md flex items-center justify-between sticky top-0 z-30">
+        <header className="h-16 px-8 border-b border-zinc-200 bg-white/90 backdrop-blur-md flex items-center justify-between sticky top-0 z-30">
           <div className="flex items-center space-x-4">
             <Link
               to="/dashboard"
-              className="text-slate-400 hover:text-white p-2 rounded-xl hover:bg-slate-900 transition-colors"
+              className="text-zinc-500 hover:text-black p-2 rounded-xl hover:bg-zinc-100 transition-colors"
               title="Back to Dashboard"
             >
               <ArrowLeft className="w-5 h-5" />
             </Link>
-            <div className="h-4 w-px bg-slate-800" />
+            <div className="h-4 w-px bg-zinc-200" />
 
             {isLoadingKB ? (
               <Skeleton className="h-5 w-48" />
             ) : (
               <div className="flex items-center space-x-2">
-                <Database className="w-4 h-4 text-indigo-400" />
-                <h1 className="text-base font-bold text-slate-100 truncate max-w-xs sm:max-w-md my-0">
+                <Database className="w-4 h-4 text-black" />
+                <h1 className="text-base font-bold text-black truncate max-w-xs sm:max-w-md my-0 font-serif-heading">
                   {kb?.name}
                 </h1>
               </div>
@@ -142,13 +142,13 @@ export const KnowledgeBaseDetailPage: React.FC = () => {
           </div>
 
           {/* Tab Switcher */}
-          <div className="flex bg-slate-900/90 border border-slate-800 p-1 rounded-xl">
+          <div className="flex bg-zinc-100 border border-zinc-200 p-1 rounded-xl">
             <button
               onClick={() => setActiveTab('documents')}
-              className={`flex items-center space-x-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+              className={`flex items-center space-x-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                 activeTab === 'documents'
-                  ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20'
-                  : 'text-slate-400 hover:text-slate-200'
+                  ? 'bg-black text-white shadow-md'
+                  : 'text-zinc-600 hover:text-black'
               }`}
             >
               <FileText className="w-3.5 h-3.5" />
@@ -156,10 +156,10 @@ export const KnowledgeBaseDetailPage: React.FC = () => {
             </button>
             <button
               onClick={() => setActiveTab('chat')}
-              className={`flex items-center space-x-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+              className={`flex items-center space-x-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                 activeTab === 'chat'
-                  ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20'
-                  : 'text-slate-400 hover:text-slate-200'
+                  ? 'bg-black text-white shadow-md'
+                  : 'text-zinc-600 hover:text-black'
               }`}
             >
               <MessageSquare className="w-3.5 h-3.5" />
@@ -171,27 +171,27 @@ export const KnowledgeBaseDetailPage: React.FC = () => {
         {/* Content Body */}
         <div className="p-8 max-w-6xl w-full mx-auto space-y-6">
           {/* KB Info Banner */}
-          <div className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="p-6 rounded-2xl bg-white border border-zinc-200 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="space-y-1">
               <div className="flex items-center space-x-3">
-                <h2 className="text-xl font-bold text-slate-100 my-0">{kb?.name}</h2>
-                <Badge variant="info">
-                  <Layers className="w-3 h-3" />
+                <h2 className="text-xl font-bold text-black my-0 font-serif-heading">{kb?.name}</h2>
+                <Badge variant="default">
+                  <Layers className="w-3 h-3 text-black" />
                   <span>Knowledge Base</span>
                 </Badge>
               </div>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-zinc-600">
                 Vectorized Knowledge Base for fast document retrieval and RAG query processing.
               </p>
             </div>
 
-            <div className="flex items-center space-x-4 text-xs text-slate-400 shrink-0">
+            <div className="flex items-center space-x-4 text-xs text-zinc-600 shrink-0">
               <div className="flex items-center space-x-1.5">
-                <FileText className="w-3.5 h-3.5 text-indigo-400" />
+                <FileText className="w-3.5 h-3.5 text-black" />
                 <span>{documents.length} Docs</span>
               </div>
               <div className="flex items-center space-x-1.5">
-                <Calendar className="w-3.5 h-3.5 text-indigo-400" />
+                <Calendar className="w-3.5 h-3.5 text-black" />
                 <span>{formattedDate}</span>
               </div>
             </div>

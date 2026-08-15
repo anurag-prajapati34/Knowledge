@@ -73,7 +73,7 @@ export const CreateKBModal: React.FC<CreateKBModalProps> = ({
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
-        <div className="flex items-center justify-end space-x-3 pt-4 border-t border-slate-800">
+        <div className="flex items-center justify-end space-x-3 pt-4 border-t border-zinc-200">
           <Button type="button" variant="ghost" onClick={onClose} disabled={isLoading}>
             Cancel
           </Button>

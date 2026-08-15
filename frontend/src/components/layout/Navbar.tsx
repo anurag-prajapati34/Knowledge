@@ -9,23 +9,23 @@ export const Navbar: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-md">
+    <header className="sticky top-0 z-40 w-full border-b border-zinc-200 bg-white/90 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center space-x-2.5 group">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-indigo-400 flex items-center justify-center shadow-lg shadow-indigo-600/30 group-hover:scale-105 transition-transform">
-            <Brain className="w-5 h-5 text-white" />
+          <div className="w-9 h-9 rounded-xl bg-black text-white flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
+            <Brain className="w-5 h-5" />
           </div>
-          <span className="font-bold text-lg text-slate-100 tracking-tight">
-            Knowledge<span className="text-indigo-400">Base</span>
+          <span className="font-bold text-lg text-black tracking-tight font-serif-heading">
+            Knowledge<span className="text-zinc-500">Base</span>
           </span>
         </Link>
 
         {/* Links */}
-        <nav className="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-400">
-          <a href="#features" className="hover:text-white transition-colors">Features</a>
-          <a href="#how-it-works" className="hover:text-white transition-colors">How it works</a>
-          <a href="#docs" className="hover:text-white transition-colors">Documentation</a>
+        <nav className="hidden md:flex items-center space-x-8 text-sm font-medium text-zinc-600">
+          <a href="#features" className="hover:text-black transition-colors">Features</a>
+          <a href="#how-it-works" className="hover:text-black transition-colors">How it works</a>
+          <a href="#docs" className="hover:text-black transition-colors">Documentation</a>
         </nav>
 
         {/* Actions */}
@@ -35,7 +35,7 @@ export const Navbar: React.FC = () => {
               variant="primary"
               size="sm"
               onClick={() => navigate('/dashboard')}
-              rightIcon={<ArrowRight className="w-4 h-4" />}
+              rightIcon={<ArrowRight className="w-4 h-4 text-white" />}
             >
               Go to Dashboard
             </Button>

@@ -22,19 +22,19 @@ export const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   const baseStyles =
-    'inline-flex items-center justify-center font-medium rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none select-none active:scale-[0.98]';
+    'inline-flex items-center justify-center font-medium rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white disabled:opacity-40 disabled:cursor-not-allowed disabled:transform-none select-none active:scale-[0.98] cursor-pointer';
 
   const variantStyles = {
     primary:
-      'bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/25 focus:ring-indigo-500 border border-indigo-500/30',
+      'bg-black hover:bg-zinc-800 text-white font-semibold shadow-md focus:ring-black border border-black',
     secondary:
-      'bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700/80 focus:ring-slate-600',
+      'bg-white hover:bg-zinc-100 text-black border border-zinc-300 focus:ring-zinc-400 shadow-sm',
     outline:
-      'bg-transparent hover:bg-slate-800/60 text-slate-200 border border-slate-700 focus:ring-indigo-500',
+      'bg-transparent hover:bg-zinc-100 text-black border border-zinc-300 focus:ring-black',
     danger:
-      'bg-rose-600/90 hover:bg-rose-500 text-white shadow-lg shadow-rose-600/20 focus:ring-rose-500 border border-rose-500/30',
+      'bg-white hover:bg-zinc-100 text-black border border-zinc-300 focus:ring-black',
     ghost:
-      'bg-transparent hover:bg-slate-800/50 text-slate-300 hover:text-white focus:ring-slate-600',
+      'bg-transparent hover:bg-zinc-100 text-zinc-700 hover:text-black focus:ring-zinc-300',
   };
 
   const sizeStyles = {
@@ -49,7 +49,7 @@ export const Button: React.FC<ButtonProps> = ({
       disabled={disabled || isLoading}
       {...props}
     >
-      {isLoading && <Spinner size={size === 'lg' ? 'md' : 'sm'} className="mr-1" />}
+      {isLoading && <Spinner size={size === 'lg' ? 'md' : 'sm'} className="mr-1 text-current" />}
       {!isLoading && leftIcon && <span className="inline-flex shrink-0">{leftIcon}</span>}
       <span>{children}</span>
       {!isLoading && rightIcon && <span className="inline-flex shrink-0">{rightIcon}</span>}

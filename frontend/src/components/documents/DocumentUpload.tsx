@@ -91,34 +91,34 @@ export const DocumentUpload: React.FC<DocumentUploadProps> = ({ kbId, onUploadSu
       onClick={() => fileInputRef.current?.click()}
       className={`relative border-2 border-dashed rounded-2xl p-8 text-center cursor-pointer transition-all duration-200 ${
         isDragging
-          ? 'border-indigo-500 bg-indigo-500/10 shadow-lg shadow-indigo-500/10 scale-[1.01]'
-          : 'border-slate-800 bg-slate-900/40 hover:border-slate-700 hover:bg-slate-900/60'
+          ? 'border-black bg-zinc-100 shadow-lg scale-[1.01]'
+          : 'border-zinc-300 bg-white hover:border-black hover:bg-zinc-50'
       }`}
     >
       <input
         ref={fileInputRef}
         type="file"
-        accept=".pdf,.md,.txt"
+        accept=".pdf,.docx,.txt,.md"
         className="hidden"
         onChange={handleFileChange}
       />
 
       <div className="flex flex-col items-center justify-center space-y-3">
-        <div className="w-14 h-14 rounded-2xl bg-indigo-600/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+        <div className="w-14 h-14 rounded-2xl bg-black text-white flex items-center justify-center">
           <UploadCloud className="w-7 h-7" />
         </div>
 
         <div>
-          <p className="text-sm font-semibold text-slate-200">
-            <span className="text-indigo-400 underline underline-offset-4">Click to upload</span> or drag and drop files
+          <p className="text-sm font-semibold text-zinc-900">
+            <span className="text-black underline underline-offset-4 font-semibold">Click to upload</span> or drag and drop files
           </p>
-          <p className="text-xs text-slate-400 mt-1">
-            Supports <span className="font-mono text-slate-300">PDF, Markdown (.md), Text (.txt)</span> up to 25MB
+          <p className="text-xs text-zinc-500 mt-1">
+            Supports <span className="font-mono text-zinc-700 font-mono-text">PDF, DOCX, Text (.txt)</span> up to 25MB
           </p>
         </div>
 
         {dragError && (
-          <p className="text-xs text-rose-400 font-medium flex items-center gap-1">
+          <p className="text-xs text-zinc-800 font-medium flex items-center gap-1">
             <AlertCircle className="w-3.5 h-3.5" />
             {dragError}
           </p>

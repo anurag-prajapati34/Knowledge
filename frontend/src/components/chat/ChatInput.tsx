@@ -34,7 +34,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
 
   return (
     <form onSubmit={handleSubmit} className="relative">
-      <div className="relative flex items-center bg-slate-900 border border-slate-800 rounded-2xl p-2 focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-500/20 transition-all">
+      <div className="relative flex items-center bg-white border border-zinc-300 rounded-2xl p-2 focus-within:border-black focus-within:ring-2 focus-within:ring-black/10 transition-all">
         <textarea
           ref={textareaRef}
           rows={1}
@@ -43,7 +43,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
           disabled={isLoading || disabled}
-          className="w-full bg-transparent text-slate-100 placeholder-slate-500 text-sm px-3 py-2 border-0 focus:outline-none resize-none max-h-32 disabled:opacity-50"
+          className="w-full bg-transparent text-black placeholder-zinc-400 text-sm px-3 py-2 border-0 focus:outline-none resize-none max-h-32 disabled:opacity-50"
         />
 
         <Button
@@ -54,13 +54,13 @@ export const ChatInput: React.FC<ChatInputProps> = ({
           isLoading={isLoading}
           className="rounded-xl px-4 py-2 shrink-0 ml-2"
         >
-          {!isLoading && <Send className="w-4 h-4" />}
+          {!isLoading && <Send className="w-4 h-4 text-white" />}
         </Button>
       </div>
 
-      <p className="text-[11px] text-slate-400 mt-2 text-center flex items-center justify-center gap-1">
-        <Sparkles className="w-3 h-3 text-indigo-400" />
-        Press <kbd className="px-1 py-0.5 bg-slate-800 border border-slate-700 rounded font-mono text-[10px]">Enter</kbd> to send, <kbd className="px-1 py-0.5 bg-slate-800 border border-slate-700 rounded font-mono text-[10px]">Shift+Enter</kbd> for new line
+      <p className="text-[11px] text-zinc-500 mt-2 text-center flex items-center justify-center gap-1">
+        <Sparkles className="w-3 h-3 text-black" />
+        Press <kbd className="px-1 py-0.5 bg-zinc-100 border border-zinc-300 rounded font-mono text-[10px] text-black font-mono-text">Enter</kbd> to send, <kbd className="px-1 py-0.5 bg-zinc-100 border border-zinc-300 rounded font-mono text-[10px] text-black font-mono-text">Shift+Enter</kbd> for new line
       </p>
     </form>
   );

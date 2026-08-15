@@ -70,19 +70,19 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({ kbId, kbName, hasDocumen
   ];
 
   return (
-    <div className="flex flex-col h-[calc(100vh-210px)] min-h-[500px] bg-slate-900/60 border border-slate-800/80 rounded-2xl overflow-hidden shadow-2xl">
+    <div className="flex flex-col h-[calc(100vh-210px)] min-h-[500px] bg-white border border-zinc-200 rounded-2xl overflow-hidden shadow-lg text-black">
       {/* Header Bar */}
-      <div className="px-6 py-4 border-b border-slate-800/80 bg-slate-900/80 flex items-center justify-between">
+      <div className="px-6 py-4 border-b border-zinc-200 bg-white flex items-center justify-between">
         <div className="flex items-center space-x-3">
-          <div className="w-8 h-8 rounded-xl bg-indigo-600/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+          <div className="w-8 h-8 rounded-xl bg-black text-white flex items-center justify-center">
             <Bot className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-slate-100">
+            <h3 className="text-sm font-semibold text-black font-serif-heading">
               AI Query Assistant
             </h3>
-            <p className="text-xs text-slate-400">
-              Answers generated using retrieved context from <span className="text-indigo-300 font-medium">{kbName || 'this Knowledge Base'}</span>
+            <p className="text-xs text-zinc-500">
+              Answers generated using retrieved context from <span className="text-black font-semibold">{kbName || 'this Knowledge Base'}</span>
             </p>
           </div>
         </div>
@@ -90,7 +90,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({ kbId, kbName, hasDocumen
         {messages.length > 0 && (
           <button
             onClick={() => setMessages([])}
-            className="flex items-center space-x-1.5 text-xs text-slate-400 hover:text-rose-400 px-3 py-1.5 rounded-lg hover:bg-slate-800 transition-colors"
+            className="flex items-center space-x-1.5 text-xs text-zinc-500 hover:text-black px-3 py-1.5 rounded-lg hover:bg-zinc-100 transition-colors cursor-pointer"
           >
             <Trash2 className="w-3.5 h-3.5" />
             <span>Clear Chat</span>
@@ -101,27 +101,27 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({ kbId, kbName, hasDocumen
       {/* Messages Scroll Area */}
       <div className="flex-1 p-6 overflow-y-auto space-y-4">
         {!hasDocuments && (
-          <div className="p-4 bg-amber-500/10 border border-amber-500/30 rounded-xl text-amber-300 text-xs flex items-center gap-2 mb-4">
-            <BookOpen className="w-4 h-4 shrink-0" />
-            <span>No documents found in this Knowledge Base yet. Upload PDF/MD/TXT files in the Documents tab for optimal answers!</span>
+          <div className="p-4 bg-zinc-50 border border-zinc-200 rounded-xl text-zinc-800 text-xs flex items-center gap-2 mb-4">
+            <BookOpen className="w-4 h-4 shrink-0 text-black" />
+            <span>No documents found in this Knowledge Base yet. Upload PDF/DOCX/TXT files in the Documents tab for optimal answers!</span>
           </div>
         )}
 
         {messages.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center text-center px-4 py-8">
-            <div className="w-16 h-16 rounded-2xl bg-indigo-600/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 mb-4 animate-pulse-glow">
+            <div className="w-16 h-16 rounded-2xl bg-black text-white flex items-center justify-center mb-4 animate-pulse-glow">
               <Sparkles className="w-8 h-8" />
             </div>
-            <h4 className="text-base font-semibold text-slate-100">
+            <h4 className="text-base font-semibold text-black font-serif-heading">
               Ask a question about your documents
             </h4>
-            <p className="text-xs text-slate-400 max-w-md mt-1.5">
+            <p className="text-xs text-zinc-500 max-w-md mt-1.5">
               The AI will retrieve relevant text chunks from your knowledge base and synthesize an answer with exact source citations.
             </p>
 
             {/* Quick Prompts */}
             <div className="mt-6 w-full max-w-lg space-y-2">
-              <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+              <p className="text-[11px] font-semibold text-zinc-400 uppercase tracking-wider">
                 Try a sample question
               </p>
               <div className="grid grid-cols-1 gap-2">
@@ -129,10 +129,10 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({ kbId, kbName, hasDocumen
                   <button
                     key={idx}
                     onClick={() => handleSendMessage(prompt)}
-                    className="text-left text-xs p-3 rounded-xl bg-slate-950/70 border border-slate-800 text-slate-300 hover:text-white hover:border-indigo-500/40 hover:bg-slate-900 transition-all flex items-center justify-between group"
+                    className="text-left text-xs p-3 rounded-xl bg-white border border-zinc-200 text-black hover:bg-zinc-100 hover:border-black transition-all flex items-center justify-between group cursor-pointer"
                   >
                     <span>"{prompt}"</span>
-                    <MessageSquare className="w-3.5 h-3.5 text-slate-500 group-hover:text-indigo-400 transition-colors" />
+                    <MessageSquare className="w-3.5 h-3.5 text-zinc-400 group-hover:text-black transition-colors" />
                   </button>
                 ))}
               </div>
@@ -147,15 +147,15 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({ kbId, kbName, hasDocumen
             {/* Generating Indicator */}
             {isGenerating && (
               <div className="flex gap-3 my-4 animate-fade-in items-center">
-                <div className="w-8 h-8 rounded-xl bg-indigo-600 border border-indigo-400/30 flex items-center justify-center text-white shrink-0">
+                <div className="w-8 h-8 rounded-xl bg-black text-white flex items-center justify-center shrink-0">
                   <Bot className="w-4.5 h-4.5" />
                 </div>
-                <div className="bg-slate-900 border border-slate-800 rounded-2xl rounded-bl-none p-4 text-xs text-slate-400 flex items-center space-x-2">
-                  <span className="font-medium text-slate-300">Searching context & generating response...</span>
+                <div className="bg-zinc-100 border border-zinc-200 rounded-2xl rounded-bl-none p-4 text-xs text-zinc-700 flex items-center space-x-2">
+                  <span className="font-medium text-black">Searching context & generating response...</span>
                   <div className="flex space-x-1 items-center">
-                    <span className="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
-                    <span className="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-bounce [animation-delay:-0.15s]"></span>
-                    <span className="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-bounce"></span>
+                    <span className="w-1.5 h-1.5 bg-black rounded-full animate-bounce [animation-delay:-0.3s]"></span>
+                    <span className="w-1.5 h-1.5 bg-black rounded-full animate-bounce [animation-delay:-0.15s]"></span>
+                    <span className="w-1.5 h-1.5 bg-black rounded-full animate-bounce"></span>
                   </div>
                 </div>
               </div>
@@ -166,7 +166,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({ kbId, kbName, hasDocumen
       </div>
 
       {/* Input Area */}
-      <div className="p-4 border-t border-slate-800/80 bg-slate-900/80">
+      <div className="p-4 border-t border-zinc-200 bg-white">
         <ChatInput onSendMessage={handleSendMessage} isLoading={isGenerating} />
       </div>
     </div>

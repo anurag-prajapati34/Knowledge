@@ -15,10 +15,10 @@ export const Card: React.FC<CardProps> = ({
 }) => {
   const baseStyles = 'rounded-2xl border transition-all duration-200 overflow-hidden';
   const glassStyles = glass
-    ? 'bg-slate-900/60 backdrop-blur-md border-slate-800/80'
-    : 'bg-slate-900 border-slate-800';
+    ? 'bg-white border-zinc-200 text-black shadow-sm'
+    : 'bg-white border-zinc-200 text-black';
   const hoverStyles = hoverable
-    ? 'hover:border-indigo-500/40 hover:shadow-xl hover:shadow-indigo-500/5 hover:-translate-y-0.5 cursor-pointer'
+    ? 'hover:border-black hover:shadow-md hover:-translate-y-0.5 cursor-pointer'
     : '';
 
   return (
@@ -29,19 +29,19 @@ export const Card: React.FC<CardProps> = ({
 };
 
 export const CardHeader: React.FC<HTMLAttributes<HTMLDivElement>> = ({ children, className = '', ...props }) => (
-  <div className={`p-5 sm:p-6 border-b border-slate-800/60 ${className}`} {...props}>
+  <div className={`p-5 sm:p-6 border-b border-zinc-200 ${className}`} {...props}>
     {children}
   </div>
 );
 
 export const CardTitle: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ children, className = '', ...props }) => (
-  <h3 className={`text-lg font-semibold text-slate-100 ${className}`} {...props}>
+  <h3 className={`text-lg font-semibold text-black ${className}`} {...props}>
     {children}
   </h3>
 );
 
 export const CardDescription: React.FC<HTMLAttributes<HTMLParagraphElement>> = ({ children, className = '', ...props }) => (
-  <p className={`text-sm text-slate-400 mt-1 ${className}`} {...props}>
+  <p className={`text-sm text-zinc-600 mt-1 ${className}`} {...props}>
     {children}
   </p>
 );
@@ -53,7 +53,7 @@ export const CardContent: React.FC<HTMLAttributes<HTMLDivElement>> = ({ children
 );
 
 export const CardFooter: React.FC<HTMLAttributes<HTMLDivElement>> = ({ children, className = '', ...props }) => (
-  <div className={`p-5 sm:p-6 border-t border-slate-800/60 bg-slate-900/40 flex items-center ${className}`} {...props}>
+  <div className={`p-5 sm:p-6 border-t border-zinc-200 bg-zinc-50 flex items-center ${className}`} {...props}>
     {children}
   </div>
 );

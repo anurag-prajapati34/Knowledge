@@ -25,12 +25,12 @@ export const DocumentRow: React.FC<DocumentRowProps> = ({ document: doc, onDelet
   const getFileIcon = (filename: string) => {
     const ext = filename.split('.').pop()?.toLowerCase();
     if (ext === 'pdf') {
-      return <FileText className="w-4 h-4 text-rose-400" />;
+      return <FileText className="w-4 h-4 text-black" />;
     }
-    if (ext === 'md') {
-      return <FileCode className="w-4 h-4 text-indigo-400" />;
+    if (ext === 'md' || ext === 'docx') {
+      return <FileCode className="w-4 h-4 text-zinc-700" />;
     }
-    return <File className="w-4 h-4 text-slate-400" />;
+    return <File className="w-4 h-4 text-zinc-500" />;
   };
 
   const handleDelete = async () => {
@@ -45,22 +45,22 @@ export const DocumentRow: React.FC<DocumentRowProps> = ({ document: doc, onDelet
   };
 
   return (
-    <div className="p-4 border-b border-slate-800/60 last:border-0 flex items-center justify-between hover:bg-slate-900/40 transition-colors group">
+    <div className="p-4 border-b border-zinc-200 last:border-0 flex items-center justify-between hover:bg-zinc-50 transition-colors group">
       {/* File Info */}
       <div className="flex items-center space-x-3 min-w-0 flex-1 pr-4">
-        <div className="w-9 h-9 rounded-xl bg-slate-800/80 border border-slate-700/60 flex items-center justify-center shrink-0">
+        <div className="w-9 h-9 rounded-xl bg-zinc-100 border border-zinc-200 flex items-center justify-center shrink-0">
           {getFileIcon(filename)}
         </div>
         <div className="min-w-0 flex-1">
-          <p className="text-sm font-medium text-slate-200 truncate group-hover:text-indigo-300 transition-colors">
+          <p className="text-sm font-medium text-black truncate group-hover:text-zinc-700 transition-colors">
             {filename}
           </p>
-          <div className="flex items-center space-x-3 text-xs text-slate-400 mt-0.5">
-            <span className="uppercase tracking-wider font-mono text-[10px] bg-slate-800 px-1.5 py-0.5 rounded">
+          <div className="flex items-center space-x-3 text-xs text-zinc-500 mt-0.5">
+            <span className="uppercase tracking-wider font-mono text-[10px] bg-zinc-100 border border-zinc-200 px-1.5 py-0.5 rounded text-zinc-700 font-mono-text">
               {filename.split('.').pop() || doc.file_type || 'file'}
             </span>
             <span className="flex items-center space-x-1">
-              <Calendar className="w-3 h-3" />
+              <Calendar className="w-3 h-3 text-zinc-500" />
               <span>{formattedDate}</span>
             </span>
           </div>
@@ -78,9 +78,9 @@ export const DocumentRow: React.FC<DocumentRowProps> = ({ document: doc, onDelet
           onClick={handleDelete}
           disabled={isDeleting}
           title="Delete Document"
-          className="text-slate-500 hover:text-rose-400 p-2 rounded-lg hover:bg-rose-500/10 transition-colors disabled:opacity-50"
+          className="text-zinc-400 hover:text-black p-2 rounded-lg hover:bg-zinc-100 transition-colors disabled:opacity-50 cursor-pointer"
         >
-          {isDeleting ? <Spinner size="sm" className="text-rose-400" /> : <Trash2 className="w-4 h-4" />}
+          {isDeleting ? <Spinner size="sm" className="text-black" /> : <Trash2 className="w-4 h-4" />}
         </button>
       </div>
     </div>

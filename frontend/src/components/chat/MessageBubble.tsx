@@ -16,17 +16,17 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
     <div className={`flex gap-3 my-4 animate-fade-in ${isUser ? 'justify-end' : 'justify-start'}`}>
       {/* Bot Icon on Left for Assistant */}
       {!isUser && (
-        <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-600 to-indigo-500 border border-indigo-400/30 flex items-center justify-center text-white shrink-0 shadow-md shadow-indigo-600/20">
+        <div className="w-8 h-8 rounded-xl bg-black text-white flex items-center justify-center shrink-0 shadow-md">
           <Bot className="w-4.5 h-4.5" />
         </div>
       )}
 
       {/* Bubble Container */}
       <div
-        className={`max-w-[85%] sm:max-w-[75%] rounded-2xl p-4 text-sm leading-relaxed shadow-lg ${
+        className={`max-w-[85%] sm:max-w-[75%] rounded-2xl p-4 text-sm leading-relaxed shadow-sm ${
           isUser
-            ? 'bg-indigo-600 text-white rounded-br-none shadow-indigo-600/10 border border-indigo-500/30'
-            : 'bg-slate-900/90 text-slate-100 border border-slate-800 rounded-bl-none'
+            ? 'bg-black text-white rounded-br-none font-medium'
+            : 'bg-zinc-100 text-black border border-zinc-200 rounded-bl-none'
         }`}
       >
         {/* Author Label & Time */}
@@ -46,7 +46,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
 
       {/* User Avatar on Right for User */}
       {isUser && (
-        <div className="w-8 h-8 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-300 shrink-0 text-xs font-semibold">
+        <div className="w-8 h-8 rounded-xl bg-zinc-200 border border-zinc-300 text-black flex items-center justify-center shrink-0 text-xs font-semibold">
           {user?.full_name ? user.full_name.charAt(0).toUpperCase() : <UserIcon className="w-4 h-4" />}
         </div>
       )}

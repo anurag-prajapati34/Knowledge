@@ -70,24 +70,24 @@ export const RegisterPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#090d16] flex flex-col justify-center items-center p-4 relative overflow-hidden">
-      {/* Glow Effect */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none" />
+    <div className="min-h-screen bg-white flex flex-col justify-center items-center p-4 relative overflow-hidden text-black font-sans">
+      {/* Background Subtle Accent */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-black/5 rounded-full blur-[120px] pointer-events-none" />
 
       {/* Header Logo */}
       <Link to="/" className="flex items-center space-x-3 mb-8 group">
-        <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-indigo-400 flex items-center justify-center shadow-lg shadow-indigo-600/30 group-hover:scale-105 transition-transform">
-          <Brain className="w-6 h-6 text-white" />
+        <div className="w-10 h-10 rounded-xl bg-black text-white flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
+          <Brain className="w-6 h-6" />
         </div>
-        <span className="font-bold text-xl text-slate-100 tracking-tight">
-          Knowledge<span className="text-indigo-400">Base</span>
+        <span className="font-bold text-xl text-black tracking-tight font-serif-heading">
+          Knowledge<span className="text-zinc-500">Base</span>
         </span>
       </Link>
 
-      <Card className="w-full max-w-md p-8 bg-slate-900/80 border-slate-800 backdrop-blur-xl shadow-2xl shadow-indigo-950/30">
+      <Card className="w-full max-w-md p-8 bg-white border-zinc-200 shadow-xl">
         <div className="text-center mb-6">
-          <h2 className="text-2xl font-bold text-slate-100 tracking-tight">Create your Account</h2>
-          <p className="text-xs text-slate-400 mt-1.5">Start building private knowledge bases today</p>
+          <h2 className="text-2xl font-bold text-black tracking-tight font-serif-heading">Create your Account</h2>
+          <p className="text-xs text-zinc-600 mt-1.5">Start building private knowledge bases today</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -98,7 +98,7 @@ export const RegisterPage: React.FC = () => {
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
             error={errors.fullName}
-            leftIcon={<UserIcon className="w-4 h-4" />}
+            leftIcon={<UserIcon className="w-4 h-4 text-zinc-500" />}
             autoFocus
           />
 
@@ -109,7 +109,7 @@ export const RegisterPage: React.FC = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             error={errors.email}
-            leftIcon={<Mail className="w-4 h-4" />}
+            leftIcon={<Mail className="w-4 h-4 text-zinc-500" />}
           />
 
           <Input
@@ -119,7 +119,7 @@ export const RegisterPage: React.FC = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             error={errors.password}
-            leftIcon={<Lock className="w-4 h-4" />}
+            leftIcon={<Lock className="w-4 h-4 text-zinc-500" />}
           />
 
           <Input
@@ -129,7 +129,7 @@ export const RegisterPage: React.FC = () => {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             error={errors.confirmPassword}
-            leftIcon={<Lock className="w-4 h-4" />}
+            leftIcon={<Lock className="w-4 h-4 text-zinc-500" />}
           />
 
           <Button
@@ -138,15 +138,15 @@ export const RegisterPage: React.FC = () => {
             size="lg"
             isLoading={isLoading}
             className="w-full mt-2"
-            rightIcon={<ArrowRight className="w-4 h-4" />}
+            rightIcon={<ArrowRight className="w-4 h-4 text-white" />}
           >
             Create Free Account
           </Button>
         </form>
 
-        <div className="mt-6 pt-6 border-t border-slate-800 text-center text-xs text-slate-400">
+        <div className="mt-6 pt-6 border-t border-zinc-200 text-center text-xs text-zinc-600">
           Already have an account?{' '}
-          <Link to="/login" className="text-indigo-400 hover:text-indigo-300 font-semibold underline underline-offset-4">
+          <Link to="/login" className="text-black hover:underline font-semibold underline-offset-4">
             Sign In
           </Link>
         </div>
