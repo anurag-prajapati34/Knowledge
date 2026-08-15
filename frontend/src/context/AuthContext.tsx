@@ -27,9 +27,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  // Rehydrate auth state from localStorage on app start
+  // Rehydrate auth state & verify token with backend /auth/me on app start
   useEffect(() => {
-    const initializeAuth = () => {
+    const initializeAuth = async () => {
       const storedToken = localStorage.getItem('kb_auth_token');
       const storedUser = localStorage.getItem('kb_user');
 
@@ -41,6 +41,24 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           } catch {
             localStorage.removeItem('kb_user');
           }
+        }
+
+        try {
+          // Fetch fresh user info from backend /auth/me
+          const meData = await authApi.getMe();
+          const updatedUser: User = {
+            id: user?.id || 0,
+            email: meData.email,
+            full_name: meData.full_name,
+          };
+          setUser(updatedUser);
+          localStorage.setItem('kb_user', JSON.stringify(updatedUser));
+        } catch {
+          // If /auth/me fails (token expired/invalid), clear session
+          localStorage.removeItem('kb_auth_token');
+          localStorage.removeItem('kb_user');
+          setToken(null);
+          setUser(null);
         }
       }
       setIsLoading(false);
@@ -117,4 +135,3 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     </AuthContext.Provider>
   );
 };
-

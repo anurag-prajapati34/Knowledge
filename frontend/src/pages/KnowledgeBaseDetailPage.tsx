@@ -4,6 +4,7 @@ import { Sidebar } from '../components/layout/Sidebar';
 import { kbApi } from '../api/kb';
 import { documentsApi } from '../api/documents';
 import type { KnowledgeBase, Document } from '../types';
+import { formatApiError } from '../api/client';
 import { DocumentUpload } from '../components/documents/DocumentUpload';
 import { DocumentList } from '../components/documents/DocumentList';
 import { ChatWindow } from '../components/chat/ChatWindow';
@@ -94,9 +95,9 @@ export const KnowledgeBaseDetailPage: React.FC = () => {
     try {
       await documentsApi.deleteDocument(kbId, docId);
       setDocuments((prev) => prev.filter((d) => String(d.id) !== String(docId)));
-      toast.success('Document deleted.');
+      toast.success('Document deleted successfully.');
     } catch (err: any) {
-      toast.error(err?.message || 'Deleting a document is not supported by the backend.');
+      toast.error(formatApiError(err) || 'Failed to delete document.');
     }
   };
 

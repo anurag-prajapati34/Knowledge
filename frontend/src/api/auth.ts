@@ -39,5 +39,9 @@ export const authApi = {
     );
     return response.data.data;
   },
-};
 
+  async getMe(): Promise<{ email: string; full_name: string }> {
+    const response = await apiClient.get<BackendResponse<{ email: string; full_name: string }>>("/auth/me");
+    return response.data.data;
+  },
+};

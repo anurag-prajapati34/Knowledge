@@ -11,7 +11,9 @@ export interface KBContextType {
   activeKB: KnowledgeBase | null;
   isLoading: boolean;
   fetchKBs: () => Promise<KnowledgeBase[]>;
+  fetchKB: (id: number | string) => Promise<KnowledgeBase>;
   createKB: (payload: CreateKBPayload) => Promise<KnowledgeBase>;
+  updateKB: (id: number | string, payload: CreateKBPayload) => Promise<KnowledgeBase>;
   deleteKB: (id: number | string) => Promise<void>;
   setActiveKB: (kb: KnowledgeBase | null) => void;
 }
@@ -41,6 +43,20 @@ export const KBProvider: React.FC<KBProviderProps> = ({ children }) => {
     }
   }, []);
 
+  const fetchKB = useCallback(async (id: number | string): Promise<KnowledgeBase> => {
+    setIsLoading(true);
+    try {
+      const data = await kbApi.getKB(id);
+      setActiveKB(data);
+      return data;
+    } catch (err: any) {
+      toast.error(formatApiError(err));
+      throw err;
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
   const createKB = async (payload: CreateKBPayload): Promise<KnowledgeBase> => {
     try {
       const newKb = await kbApi.createKB(payload);
@@ -54,6 +70,21 @@ export const KBProvider: React.FC<KBProviderProps> = ({ children }) => {
     }
   };
 
+  const updateKB = async (id: number | string, payload: CreateKBPayload): Promise<KnowledgeBase> => {
+    try {
+      const updatedKb = await kbApi.updateKB(id, payload);
+      setKbs((prev) => prev.map((kb) => (String(kb.id) === String(id) ? updatedKb : kb)));
+      if (activeKB && String(activeKB.id) === String(id)) {
+        setActiveKB(updatedKb);
+      }
+      toast.success('Knowledge Base updated successfully.');
+      return updatedKb;
+    } catch (err: any) {
+      toast.error(formatApiError(err));
+      throw err;
+    }
+  };
+
   const deleteKB = async (id: number | string): Promise<void> => {
     try {
       await kbApi.deleteKB(id);
@@ -63,7 +94,7 @@ export const KBProvider: React.FC<KBProviderProps> = ({ children }) => {
       }
       toast.success('Knowledge Base deleted successfully.');
     } catch (err: any) {
-      toast.error(formatApiError(err) || 'Deleting Knowledge Base is not supported.');
+      toast.error(formatApiError(err));
       throw err;
     }
   };
@@ -75,7 +106,9 @@ export const KBProvider: React.FC<KBProviderProps> = ({ children }) => {
         activeKB,
         isLoading,
         fetchKBs,
+        fetchKB,
         createKB,
+        updateKB,
         deleteKB,
         setActiveKB,
       }}
@@ -84,4 +117,3 @@ export const KBProvider: React.FC<KBProviderProps> = ({ children }) => {
     </KBContext.Provider>
   );
 };
-

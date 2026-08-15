@@ -20,9 +20,12 @@ export const documentsApi = {
     return response.data.data;
   },
 
-  async deleteDocument(_kbId: string | number, _docId: string | number): Promise<void> {
-    // Note: Backend does not currently support deleting a document.
-    throw new Error('Deleting a document is not supported by the backend.');
+  async getDocumentStatus(kbId: string | number, docId: string | number): Promise<Document> {
+    const response = await apiClient.get<BackendResponse<Document>>(`/kb/${kbId}/documents/${docId}`);
+    return response.data.data;
+  },
+
+  async deleteDocument(kbId: string | number, docId: string | number): Promise<void> {
+    await apiClient.delete<BackendResponse<unknown>>(`/kb/${kbId}/documents/${docId}`);
   }
 };
-
