@@ -1,6 +1,6 @@
+import { Brain, LayoutDashboard, LogOut, User as UserIcon } from 'lucide-react';
 import React from 'react';
-import { NavLink, Link, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Database, Settings, LogOut, Brain, User as UserIcon } from 'lucide-react';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 
 export const Sidebar: React.FC = () => {
@@ -14,8 +14,8 @@ export const Sidebar: React.FC = () => {
 
   const navItems = [
     { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
-    { name: 'Knowledge Bases', path: '/dashboard', icon: Database },
-    { name: 'Settings (Soon)', path: '#', icon: Settings, disabled: true },
+    // { name: 'Knowledge Bases', path: '/dashboard', icon: Database },
+    // { name: 'Settings (Soon)', path: '#', icon: Settings, disabled: true },
   ];
 
   return (
@@ -58,10 +58,9 @@ export const Sidebar: React.FC = () => {
                 to={item.path}
                 end={item.path === '/dashboard'}
                 className={({ isActive }) =>
-                  `flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${
-                    isActive
-                      ? 'bg-black text-white font-semibold shadow-sm'
-                      : 'text-zinc-600 hover:text-black hover:bg-zinc-100'
+                  `flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${isActive
+                    ? 'bg-black text-white font-semibold shadow-sm'
+                    : 'text-zinc-600 hover:text-black hover:bg-zinc-100'
                   }`
                 }
               >

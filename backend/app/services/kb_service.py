@@ -218,11 +218,10 @@ async def update_kb_service(
         )
 
     result.name = data.name
-    if data.description != None:
-        result.description = data.description
+    result.description = data.description
 
     await db.commit()
-
+    await db.refresh(result)
     return result
 
 

@@ -9,6 +9,7 @@ export interface User {
 export interface KnowledgeBase {
   id: number;
   name: string;
+  description?: string;
   user_id: number;
   created_at: string;
   updated_at: string;
@@ -53,4 +54,3 @@ export interface QueryResponse {
   answer: string;
   sources: SourceCitation[];
 }
-

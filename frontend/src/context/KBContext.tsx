@@ -1,10 +1,10 @@
-import React, { createContext, useState, useCallback } from 'react';
 import type { ReactNode } from 'react';
-import type { KnowledgeBase } from '../types';
-import { kbApi } from '../api/kb';
-import type { CreateKBPayload } from '../api/kb';
-import { formatApiError } from '../api/client';
+import React, { createContext, useCallback, useState } from 'react';
 import { toast } from 'react-toastify';
+import { formatApiError } from '../api/client';
+import type { CreateKBPayload } from '../api/kb';
+import { kbApi } from '../api/kb';
+import type { KnowledgeBase } from '../types';
 
 export interface KBContextType {
   kbs: KnowledgeBase[];
