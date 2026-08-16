@@ -12,7 +12,6 @@
 
 **Personal Knowledge is a platform where users can upload their personal documents, notes, and PDFs into separate knowledge bases and then ask questions about them**
 
-[🌐 Live Demo](#) · [💻 GitHub](#) · [👤 Portfolio](https://anuragdev.com/)
 
 </div>
 
@@ -20,20 +19,25 @@
 
 ## 📸 Preview
 
-### 📚 Knowledge Bases
+### 📚 List Knowledge Bases
+List Knowledge Bases: Displays all knowledge bases that have been created.
+
+![Knowledge Bases](./assets/home.png)
+
+### 📚 Create Knowledge Base
 Create isolated, per-user knowledge bases to organize documents by topic.
 
-![Knowledge Bases](./assets/dashboard.png)
+![Knowledge Bases](./assets/home.png)
 
 ### 📄 Document Upload
-Upload PDF/MD/TXT files — processed asynchronously in the background.
+Upload PDF/MD/TXT files processed asynchronously in the background.
 
-![Documents](./assets/documents.png)
+![Documents](./assets/upload.png)
 
 ### 💬 Ask Questions
-Query your documents in a chat interface — answers cite the exact source chunks used.
+Query your documents in a chat interface.
 
-![Query](./assets/query.png)
+![Query](./assets/chat.png)
 
 ---
 
