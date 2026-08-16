@@ -27,7 +27,7 @@ List Knowledge Bases: Displays all knowledge bases that have been created.
 ### 📚 Create Knowledge Base
 Create isolated, per-user knowledge bases to organize documents by topic.
 
-![Knowledge Bases](./assets/home.png)
+![Knowledge Bases](./assets/create.png)
 
 ### 📄 Document Upload
 Upload PDF/MD/TXT files processed asynchronously in the background.
